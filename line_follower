@@ -1,93 +1,72 @@
-/*at the output if you dont have motors installed yet then check the serial monitor from tools to find the output result printed
-A=going forward
-B=going right
-C=going left
-D=stopping*/
-/*author: Debanjan Chakraborty
-date:4th April 2022
-*/
-//Motor one
-#define ENA 6
-#define IN1 7
-#define IN2 8
+/*AUTHOR:DEBANJAN CHAKRABORTY
+  DATE(last updated):4th April 2022
+  TOPIC:LINE FOLLOWER ROBOT CODE
+  IDE:ARDUINO
+  BOARD:ARDUINO UNO
+#GUIDELINES#
+->To keep the robot at max efficiency maintain the angle of 2 ir sensors at ** degrees so even though there might appear a right angle 
+the robot would sense it as a normal turn.
+->This issue might seem complecated at first but is very easy to solve just by increasing the angle between the sensors.
+->This method is exclusively for only 2 sensor line followers, complex cases appear as you keep increasing the number of sensors.
+->I strictly prefre not to use more than 4 sensors as the power supply is mostly limited to 12V in expo and competitions so please follow these guidelines carefully.
+->If your motors are not as good as mine were please dont do any alterations to the code as the sppeds are tested repeatedly till I achieved 100% accuracy.
+->While personel testing make a track to minimum 3 cm width or two tapes side by side worth so the gap between them is maintained and the line follower smoothly 
+follows the line.
+->I request to test multiple times before presenting the product as there might be some hardware issues that you never know wen they can arise.
+->Makes sure that the robot starts with the black line in the middle and white lines n the side and if you install my code in it or take reference from it you 
+would not hve any issue completing the product with flying colours.*/
+#define ena 6
+#define mla 7
+#define mlb 8
 
-//Motor two
-#define IN3 9
-#define IN4 10
-#define ENB 11
 
-#define Speed 255
+#define mra 9
+#define mrb 10
+#define enb 11
 
+#define Speed 80
 void setup() {
-  //starting a serial port to output at serial monitor
-  Serial.begin(9600);
-  //Sensor pins
-  pinMode(2, INPUT);
+  //pins
   pinMode(3, INPUT);
   pinMode(4, INPUT);
-  pinMode(5, INPUT);
-  //Motor one
-  pinMode(ENA, OUTPUT);
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  //Motor two
-  pinMode(ENB, OUTPUT);
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
-
+  pinMode(mla, OUTPUT);
+  pinMode(mlb, OUTPUT);
+  pinMode(mra, OUTPUT);
+  pinMode(mrb, OUTPUT);
+  pinMode(ena,OUTPUT);
+  pinMode(enb,OUTPUT);
 }
 void loop() {
-  bool SOne = digitalRead(2);
-  bool STwo = digitalRead(3);
-  bool SThree = digitalRead(4);
-  bool SFour = digitalRead(5);
-
-  if (SOne == 0 && STwo == 1 && SThree == 1 && SFour == 0 ) {
-    forward();
-  } else if (SOne == 1 && STwo == 1 && SThree == 1 && SFour == 1) {
-    Stop();
-  } else if (SOne == 0 && STwo == 0 && SThree == 0 && SFour == 0) {
-    Stop();
-  }  else if (SOne == 1 && STwo == 1 && SThree == 0 && SFour == 0) {
-    turnleft();
-  } else if (SOne == 0 && STwo == 0 && SThree == 1 && SFour == 1) {
-    turnright();
+  
+  if (digitalRead(3)==LOW && digitalRead(4)==LOW){
+    analogWrite(ena,Speed);
+    analogWrite(enb,Speed);
+    digitalWrite(mla, HIGH);
+    digitalWrite(mlb, LOW);
+    digitalWrite(mra, HIGH);
+    digitalWrite(mrb, LOW);
+  } else if (digitalRead(3)==LOW && digitalRead(4)==HIGH){
+    analogWrite(ena,190);
+    analogWrite(enb,190);
+    digitalWrite(mla, LOW);
+    digitalWrite(mlb, LOW);
+    digitalWrite(mra, HIGH);
+    digitalWrite(mrb, LOW);
+  } else if (digitalRead(3)==HIGH && digitalRead(4)==LOW){
+    analogWrite(ena,190);
+    analogWrite(enb,190);
+    digitalWrite(mla, HIGH);
+    digitalWrite(mlb, LOW);
+    digitalWrite(mra, LOW);
+    digitalWrite(mrb, LOW);
+  } else if (digitalRead(3)==HIGH && digitalRead(4)==HIGH){
+    analogWrite(ena,Speed);
+    analogWrite(enb,Speed);
+    digitalWrite(mla, LOW);
+    digitalWrite(mlb, LOW);
+    digitalWrite(mra, LOW);
+    digitalWrite(mrb, LOW);
+    
   }
-}
-
-void forward() {
-  Serial.print("A");
-  analogWrite(ENA, Speed);
-  analogWrite(ENB, Speed);
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-}
-void turnright() {
-  Serial.print("B");
-  analogWrite(ENA, Speed);
-  analogWrite(ENB, Speed);
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-}
-void turnleft() {
-  Serial.print("C");
-  analogWrite(ENA, Speed);
-  analogWrite(ENB, Speed);
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, HIGH);
-}
-void Stop() {
-  Serial.print("D");
-  analogWrite(ENA, 0);
-  analogWrite(ENB, 0);
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
+  
 }
