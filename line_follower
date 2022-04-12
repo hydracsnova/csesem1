@@ -15,29 +15,35 @@ follows the line.
 ->I request to test multiple times before presenting the product as there might be some hardware issues that you never know wen they can arise.
 ->Makes sure that the robot starts with the black line in the middle and white lines n the side and if you install my code in it or take reference from it you 
 would not hve any issue completing the product with flying colours.*/
+//defination of pins of motor
+//Motor 1
 #define ena 6
 #define mla 7
 #define mlb 8
 
-
+//Motor 2
 #define mra 9
 #define mrb 10
 #define enb 11
 
+//Optimum speed setting
 #define Speed 80
+
 void setup() {
-  //pins
+  //pins for sensors
   pinMode(3, INPUT);
   pinMode(4, INPUT);
+  //pins for motor driver
   pinMode(mla, OUTPUT);
   pinMode(mlb, OUTPUT);
   pinMode(mra, OUTPUT);
   pinMode(mrb, OUTPUT);
+  //pulse width modulation pins
   pinMode(ena,OUTPUT);
   pinMode(enb,OUTPUT);
 }
 void loop() {
-  
+  //conditions for movements
   if (digitalRead(3)==LOW && digitalRead(4)==LOW){
     analogWrite(ena,Speed);
     analogWrite(enb,Speed);
