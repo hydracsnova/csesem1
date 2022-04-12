@@ -27,7 +27,7 @@ would not hve any issue completing the product with flying colours.*/
 #define enb 11
 
 //Optimum speed setting
-#define Speed 80
+#define Speed 65
 
 void setup() {
   //pins for sensors
@@ -52,15 +52,15 @@ void loop() {
     digitalWrite(mra, HIGH);
     digitalWrite(mrb, LOW);
   } else if (digitalRead(3)==LOW && digitalRead(4)==HIGH){
-    analogWrite(ena,190);
-    analogWrite(enb,190);
+    analogWrite(ena,170);
+    analogWrite(enb,170);
     digitalWrite(mla, LOW);
     digitalWrite(mlb, LOW);
     digitalWrite(mra, HIGH);
     digitalWrite(mrb, LOW);
   } else if (digitalRead(3)==HIGH && digitalRead(4)==LOW){
-    analogWrite(ena,190);
-    analogWrite(enb,190);
+    analogWrite(ena,170);
+    analogWrite(enb,170);
     digitalWrite(mla, HIGH);
     digitalWrite(mlb, LOW);
     digitalWrite(mra, LOW);
@@ -76,3 +76,5 @@ void loop() {
   }
   
 }
+//Even though the robot might feel slow but this is to ensure maximum accuracy.
+//Remember your first target is to complete the race and not to win it, winning comes in the process.
